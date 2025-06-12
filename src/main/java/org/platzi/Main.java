@@ -1,7 +1,12 @@
 package org.platzi;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -9,22 +14,99 @@ public class Main {
         * id
         * description
         * status
+        * createdAt
+        * updatedAt
         */
-        Main app = new Main();
-        app.fileVerificator();
+
+        fileVerificator();
 
         if(args.length > 0){
-            System.out.println("Hay commando");
+            commandIdentificator(args);
         } else {
-            System.out.println("No hay commando");
+            errorHandler();
+        }
+    }
+
+    private static void errorHandler(){
+        System.out.println("Don't recognize the instrucction. Use --help to see the availables commands");
+    }
+    private static void fileVerificator() throws IOException {
+        File file = new File("tasks.json");
+        if (!file.exists()){
+            file.createNewFile();
+        }
+    }
+
+    private static void commandIdentificator(String[] args) throws IOException{
+        switch (args[0]){
+            case "--add":
+                System.out.println("It's add command");
+                addCommand(args);
+                break;
+            case "--update":
+                System.out.println("It's update command");
+                break;
+            case "--delete":
+                System.out.println("It's delete command");
+                break;
+            case "--mark-done":
+                System.out.println("It's mark-done command");
+                break;
+            case "--mark-in-progress":
+                System.out.println("It's mark-in-progress command");
+                break;
+            case "--list":
+                System.out.println("It's list command");
+                break;
+            case "--help":
+                helpCommand();
+                break;
+            default:
+                errorHandler();
+        }
+    }
+
+    private static void addCommand(String[] args) throws IOException {
+        try {
+            File file = new File("tasks.json");
+            FileWriter writer = new FileWriter(file, true);
+
+            if (args.length == 2 ){
+                Date date = new Date();
+                Integer id = 1;
+                writer.write(
+                        "{\n" +
+                                "  \"id\": " + id + ",\n" +
+                                "  \"title\": \"" + args[1] + "\",\n" +
+                                "  \"status\": \"pending\",\n" +
+                                "  \"createdAt\": \"" + date + "\",\n" +
+                                "  \"updatedAt\": \"" + date + "\"\n" +
+                                "},"
+                );
+                System.out.println("Task added successfully (ID:" + id +")");
+                writer.close();
+            } else {
+                errorHandler();
+            }
+        } catch (IOException e) {
+            System.out.println("Error: " + e);
         }
 
     }
 
-    private void fileVerificator() throws IOException {
-        File file = new File("tasks.json");
-        if (!file.exists()){
-            file.createNewFile();
+    private static void helpCommand(){
+        List<String> commandsList = new ArrayList<>(Arrays.asList(
+                "--add following the description to add a task",
+                "--update following with the id target and the description to update the task",
+                "--delete following the id to delete a task",
+                "--mark-done following the id to mark done a task",
+                "--mark-in-progress following the id to mark in progress a task",
+                "--list to see all tasks, or with status (done, in-progress, not done) to filter tasks",
+                "--help to see all commands"
+        ));
+        System.out.println("That's all you can to do");
+        for (String command : commandsList){
+            System.out.println(command);
         }
     }
 }
