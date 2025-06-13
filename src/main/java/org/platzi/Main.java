@@ -3,10 +3,12 @@ package org.platzi;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Function;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -73,15 +75,19 @@ public class Main {
 
             if (args.length == 2 ){
                 Date date = new Date();
-                Integer id = 1;
+                int id = createId(file);
+                if (id == 0){
+                    errorHandler();
+                    return;
+                }
                 writer.write(
-                        "{\n" +
-                                "  \"id\": " + id + ",\n" +
-                                "  \"title\": \"" + args[1] + "\",\n" +
-                                "  \"status\": \"pending\",\n" +
-                                "  \"createdAt\": \"" + date + "\",\n" +
-                                "  \"updatedAt\": \"" + date + "\"\n" +
-                                "},"
+                        "{" +
+                                "\"id\":" + id + "," +
+                                "\"title\": \"" + args[1] + "\"," +
+                                "\"status\": \"pending\"," +
+                                "\"createdAt\": \"" + date + "\"," +
+                                "\"updatedAt\": \"" + date + "\"" +
+                                "}\n"
                 );
                 System.out.println("Task added successfully (ID:" + id +")");
                 writer.close();
@@ -94,6 +100,26 @@ public class Main {
 
     }
 
+    private static int createId(File file) throws IOException{
+        try{
+            // Get all tasks
+            List<String> taskLines = new ArrayList<>(Files.readAllLines(file.toPath()));
+            if (taskLines.size() <= 0){ // see if the first task
+                return 1;
+            }
+            String lastLine = taskLines.getLast();
+            Function<String, Integer> getIndexTaskId = (task) -> task.lastIndexOf("\"id\":");
+            Integer indexId = getIndexTaskId.apply(lastLine);
+
+            char cha = lastLine.charAt(indexId + 5);
+            return Character.getNumericValue(cha) + 1;
+
+        } catch (IOException e){
+            System.out.println("Error " + e);
+        }
+        return 0;
+    }
+
     private static void helpCommand(){
         List<String> commandsList = new ArrayList<>(Arrays.asList(
                 "--add following the description to add a task",
@@ -104,9 +130,6 @@ public class Main {
                 "--list to see all tasks, or with status (done, in-progress, not done) to filter tasks",
                 "--help to see all commands"
         ));
-        System.out.println("That's all you can to do");
-        for (String command : commandsList){
-            System.out.println(command);
-        }
+        commandsList.forEach(System.out::println);
     }
 }
