@@ -45,7 +45,8 @@ public class Main {
                 System.out.println("It's mark-in-progress command");
                 break;
             case "--list":
-                System.out.println("It's list command");
+                ListCommandController listCommandController = new ListCommandController();
+                listCommandController.listAllTasks(file);
                 break;
             case "--help":
                 helpCommand();
