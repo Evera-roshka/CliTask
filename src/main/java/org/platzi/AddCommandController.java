@@ -33,7 +33,7 @@ public class AddCommandController {
                 writer.write(
                         "{" +
                                 "\"id\":" + id + "," +
-                                "\"title\": \"" + args[1] + "\"," +
+                                "\"description\": \"" + args[1] + "\"," +
                                 "\"status\": \"pending\"," +
                                 "\"createdAt\": \"" + date + "\"," +
                                 "\"updatedAt\": \"" + date + "\"" +
@@ -47,11 +47,11 @@ public class AddCommandController {
         } catch (IOException e) {
             System.out.println("Error: " + e);
         }
-
     }
 
     public int createId() throws IOException{
         try{
+            System.out.println("what");
             // Get all tasks
             List<String> taskLines = new ArrayList<>(Files.readAllLines(this.file.toPath()));
             if (taskLines.size() <= 0){ // see if the first task
@@ -61,11 +61,11 @@ public class AddCommandController {
             Function<String, Integer> getIndexTaskId = (task) -> task.lastIndexOf("\"id\":");
             Integer indexId = getIndexTaskId.apply(lastLine);
 
-            if (taskLines.size() > 10){
+            if (taskLines.size() >= 10){
                 char cha1 = lastLine.charAt(indexId + 5);
                 char cha2 = lastLine.charAt(indexId + 6);
-                String number = String.valueOf(cha1 + cha2);
-                return Integer.parseInt(number);
+                String number = "" + cha1 + cha2;
+                return Integer.parseInt(number) + 1;
             }
             char cha = lastLine.charAt(indexId + 5);
             return Character.getNumericValue(cha) + 1;
@@ -75,5 +75,4 @@ public class AddCommandController {
         }
         return 0;
     }
-
 }

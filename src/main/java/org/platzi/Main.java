@@ -33,10 +33,10 @@ public class Main {
                 addCommandController.addCommand(args);
                 break;
             case "--update":
-                System.out.println("It's update command");
+                UpdateCommandController.updateTitle(file, args[1], args[2]);
                 break;
             case "--delete":
-                System.out.println("It's delete command");
+                DeleteCommandController.deleteTask(file, args[1]);
                 break;
             case "--mark-done":
                 System.out.println("It's mark-done command");
@@ -45,8 +45,7 @@ public class Main {
                 System.out.println("It's mark-in-progress command");
                 break;
             case "--list":
-                ListCommandController listCommandController = new ListCommandController();
-                listCommandController.listAllTasks(file);
+                ListCommandController.listAllTasks(file);
                 break;
             case "--help":
                 helpCommand();
