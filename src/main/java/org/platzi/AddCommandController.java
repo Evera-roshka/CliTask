@@ -13,19 +13,15 @@ import java.util.function.ToIntFunction;
 import static org.platzi.Utils.errorHandler;
 
 public class AddCommandController {
-    File file;
 
-    public AddCommandController(File file) {
-        this.file = file;
-    }
 
-    public void addCommand(String[] args) throws IOException {
+    public static void addCommand(File file, String[] args) throws IOException {
         try {
             FileWriter writer = new FileWriter(file, true);
 
             if (args.length == 2 ){
                 Date date = new Date();
-                int id = createId();
+                int id = createId(file);
                 if (id == 0){
                     errorHandler();
                     return;
@@ -49,11 +45,10 @@ public class AddCommandController {
         }
     }
 
-    public int createId() throws IOException{
+    public static int createId(File file) throws IOException{
         try{
-            System.out.println("what");
             // Get all tasks
-            List<String> taskLines = new ArrayList<>(Files.readAllLines(this.file.toPath()));
+            List<String> taskLines = new ArrayList<>(Files.readAllLines(file.toPath()));
             if (taskLines.size() <= 0){ // see if the first task
                 return 1;
             }

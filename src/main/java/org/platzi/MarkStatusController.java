@@ -1,13 +1,10 @@
 package org.platzi;
 
 import java.io.*;
-import java.util.Arrays;
-
-import java.io.*;
 import java.util.Date;
 
-public class UpdateCommandController {
-    public static void updateTitle(File originalFile, String idTarget, String newTask) throws IOException {
+public class MarkStatusController {
+    public static void markStatus(File originalFile, String idTarget, String newStatus) throws IOException {
         File tempFile = new File("tasks_temp.json");
 
         try (BufferedReader reader = new BufferedReader(new FileReader(originalFile));
@@ -19,8 +16,8 @@ public class UpdateCommandController {
                 if (currentLine.contains("\"id\":" + idTarget)) {
                     // Reemplazar el valor de "description"
                     currentLine = currentLine.replaceAll(
-                            "\"description\"\\s*:\\s*\"[^\"]*\"",
-                            "\"description\":\"" + newTask + "\""
+                            "\"status\"\\s*:\\s*\"[^\"]*\"",
+                            "\"status\":\"" + newStatus + "\""
                     );
                     currentLine = currentLine.replaceAll(
                             "\"updatedAt\"\\s*:\\s*\"[^\"]*\"",
@@ -42,4 +39,3 @@ public class UpdateCommandController {
         }
     }
 }
-

@@ -15,7 +15,7 @@ public class Main {
         * updatedAt
         */
         File file = new File("tasks.json");
-        if(!fileVerificator(file)){
+        if(fileVerificator(file)){
             errorHandler();
         }
 
@@ -29,8 +29,7 @@ public class Main {
     public static void commandIdentificator(String[] args, File file) throws IOException{
         switch (args[0]){
             case "--add":
-                AddCommandController addCommandController = new AddCommandController(file);
-                addCommandController.addCommand(args);
+                AddCommandController.addCommand(file, args);
                 break;
             case "--update":
                 UpdateCommandController.updateTitle(file, args[1], args[2]);
@@ -39,10 +38,10 @@ public class Main {
                 DeleteCommandController.deleteTask(file, args[1]);
                 break;
             case "--mark-done":
-                System.out.println("It's mark-done command");
+                MarkStatusController.markStatus(file, args[1], "done");
                 break;
             case "--mark-in-progress":
-                System.out.println("It's mark-in-progress command");
+                MarkStatusController.markStatus(file, args[1], "in progress");
                 break;
             case "--list":
                 ListCommandController.listAllTasks(file);
