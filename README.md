@@ -2,6 +2,9 @@
 
 A simple command-line interface (CLI) application for managing tasks, built in Java. This application allows you to create, update, delete, and track the status of your tasks through a JSON file-based storage system.
 
+# Project Repository
+🔗 GitHub: https://github.com/Evera-roshka/CliTask
+
 ## Features
 
 - **Add Tasks**: Create new tasks with descriptions
@@ -134,9 +137,6 @@ java org.CliTask.Main --list done
 # Delete task with ID 2
 java org.CliTask.Main --delete 2
 ```
-
-## Project Url
-https://github.com/Evera-roshka/CliTask
 
 ## Contributing
 
