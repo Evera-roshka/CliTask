@@ -138,10 +138,4 @@ java org.CliTask.Main --list done
 java org.CliTask.Main --delete 2
 ```
 
-## Contributing
-
-Feel free to fork this project and submit pull requests for any improvements or additional features you'd like to add.
-
-## License
-
-This project is open source and available under standard open source licensing terms.
+My solution for https://roadmap.sh/projects/task-tracker
