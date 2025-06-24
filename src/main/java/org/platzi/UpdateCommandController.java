@@ -6,9 +6,13 @@ import java.util.Arrays;
 import java.io.*;
 import java.util.Date;
 
+import static org.platzi.Utils.deleteTempFile;
+import static org.platzi.Utils.isValidID;
+
 public class UpdateCommandController {
     public static void updateTitle(File originalFile, String idTarget, String newTask) throws IOException {
         File tempFile = new File("tasks_temp.json");
+        boolean findIdTarget = false;
 
         try (BufferedReader reader = new BufferedReader(new FileReader(originalFile));
              BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
@@ -17,7 +21,8 @@ public class UpdateCommandController {
 
             while ((currentLine = reader.readLine()) != null) {
                 if (currentLine.contains("\"id\":" + idTarget)) {
-                    // Reemplazar el valor de "description"
+                    findIdTarget = true;
+                    // Replace the value of 'description'
                     currentLine = currentLine.replaceAll(
                             "\"description\"\\s*:\\s*\"[^\"]*\"",
                             "\"description\":\"" + newTask + "\""
@@ -32,14 +37,8 @@ public class UpdateCommandController {
             }
         }
 
-        // Reemplazamos el archivo original con el temporal
-        if (originalFile.delete()) {
-            if (!tempFile.renameTo(originalFile)) {
-                System.out.println("No se pudo renombrar el archivo temporal.");
-            }
-        } else {
-            System.out.println("No se pudo borrar el archivo original.");
-        }
+        isValidID(findIdTarget, idTarget); // Let's see if the id was found.
+        deleteTempFile(originalFile, tempFile); // We replaced the original file with the temporary one.
     }
 }
 

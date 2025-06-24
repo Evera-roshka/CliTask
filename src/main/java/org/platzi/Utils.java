@@ -8,8 +8,8 @@ import java.util.List;
 
 
 public class Utils {
-    public static void errorHandler(){
-        System.out.println("Don't recognize the instrucction. Use --help to see the availables commands");
+    public static void errorHandler(String message){
+        System.out.println(message);
     }
     public static boolean fileVerificator(File file) throws IOException {
         if (!file.exists()){
@@ -18,7 +18,14 @@ public class Utils {
         return false;
     }
 
-
+    public static boolean isNumber(String number){
+        try {
+            Integer.parseInt(number);
+            return true;
+        } catch (NumberFormatException e){
+            return false;
+        }
+    }
 
     public static void helpCommand(){
         List<String> commandsList = new ArrayList<>(Arrays.asList(
@@ -31,5 +38,22 @@ public class Utils {
                 "--help to see all commands"
         ));
         commandsList.forEach(System.out::println);
+    }
+
+    public static void isValidID(boolean findIdTarget, String idTarget){
+        if (findIdTarget)
+            System.out.println("The task with the ID " + idTarget + " was deleted");
+        else
+            System.out.println("The task with ID " + idTarget + " was not found");
+    }
+
+    public static void deleteTempFile(File originalFile, File tempFile) {
+        if (originalFile.delete()) {
+            if (!tempFile.renameTo(originalFile)) {
+                System.out.println("No se pudo renombrar el archivo temporal.");
+            }
+        } else {
+            System.out.println("No se pudo borrar el archivo original.");
+        }
     }
 }

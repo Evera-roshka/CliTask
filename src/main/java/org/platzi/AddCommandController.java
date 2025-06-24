@@ -19,27 +19,24 @@ public class AddCommandController {
         try {
             FileWriter writer = new FileWriter(file, true);
 
-            if (args.length == 2 ){
-                Date date = new Date();
-                int id = createId(file);
-                if (id == 0){
-                    errorHandler();
-                    return;
-                }
-                writer.write(
-                        "{" +
-                                "\"id\":" + id + "," +
-                                "\"description\": \"" + args[1] + "\"," +
-                                "\"status\": \"pending\"," +
-                                "\"createdAt\": \"" + date + "\"," +
-                                "\"updatedAt\": \"" + date + "\"" +
-                                "}\n"
-                );
-                System.out.println("Task added successfully (ID:" + id +")");
-                writer.close();
-            } else {
-                errorHandler();
+            Date date = new Date();
+            int id = createId(file);
+            if (id == 0){
+                errorHandler("Sorry. Something went wrong.");
+                return;
             }
+            writer.write(
+                    "{" +
+                            "\"id\":" + id + "," +
+                            "\"description\": \"" + args[1] + "\"," +
+                            "\"status\": \"pending\"," +
+                            "\"createdAt\": \"" + date + "\"," +
+                            "\"updatedAt\": \"" + date + "\"" +
+                        "}\n"
+            );
+            System.out.println("Task added successfully (ID:" + id +")");
+            writer.close();
+
         } catch (IOException e) {
             System.out.println("Error: " + e);
         }

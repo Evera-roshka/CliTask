@@ -3,17 +3,26 @@ package org.platzi;
 import java.io.*;
 import java.util.Arrays;
 
+import static org.platzi.Utils.*;
+
 public class DeleteCommandController {
     public static void deleteTask(File originalFile, String idTarget) throws IOException {
         File tempFile = new File("tasks_temp.json");
+
+        if(!isNumber(idTarget)){
+            errorHandler("Id is not a number");
+            return;
+        }
 
         BufferedReader reader = new BufferedReader(new FileReader(originalFile));
         BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
 
         String currentLine;
 
+        boolean findIdTarget = false;
         while ((currentLine = reader.readLine()) != null) {
             if (currentLine.contains("\"id\":" + idTarget)) {
+                findIdTarget = true;
                 continue;
             }
             writer.write(currentLine + System.lineSeparator());
@@ -22,11 +31,7 @@ public class DeleteCommandController {
         writer.close();
         reader.close();
 
-        // Reemplazamos el archivo original con el temporal
-        if (originalFile.delete()) {
-            tempFile.renameTo(originalFile);
-        } else {
-            System.out.println("No se pudo borrar el archivo original.");
-        }
+        isValidID(findIdTarget, idTarget); // Let's see if the id was found.
+        deleteTempFile(originalFile, tempFile); // We replaced the original file with the temporary one.
     }
 }
