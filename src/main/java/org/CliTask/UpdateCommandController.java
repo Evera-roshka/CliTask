@@ -1,13 +1,11 @@
-package org.platzi;
+package org.CliTask;
 
 import java.io.*;
-import java.util.Arrays;
 
-import java.io.*;
 import java.util.Date;
 
-import static org.platzi.Utils.*;
-import static org.platzi.Utils.errorHandler;
+import static org.CliTask.Utils.*;
+import static org.CliTask.Utils.errorHandler;
 
 public class UpdateCommandController {
     public static void updateTitle(File originalFile, String idTarget, String newTask) throws IOException {

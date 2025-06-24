@@ -1,9 +1,9 @@
-package org.platzi;
+package org.CliTask;
 
 import java.io.File;
 import java.io.IOException;
 
-import static org.platzi.Utils.*;
+import static org.CliTask.Utils.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {

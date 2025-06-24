@@ -1,10 +1,10 @@
-package org.platzi;
+package org.CliTask;
 
 import java.io.*;
 import java.util.Date;
 
-import static org.platzi.Utils.*;
-import static org.platzi.Utils.deleteTempFile;
+import static org.CliTask.Utils.*;
+import static org.CliTask.Utils.deleteTempFile;
 
 public class MarkStatusController {
     public static void markStatus(File originalFile, String idTarget, String newStatus) throws IOException {

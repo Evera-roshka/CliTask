@@ -1,9 +1,8 @@
-package org.platzi;
+package org.CliTask;
 
 import java.io.*;
-import java.util.Arrays;
 
-import static org.platzi.Utils.*;
+import static org.CliTask.Utils.*;
 
 public class DeleteCommandController {
     public static void deleteTask(File originalFile, String idTarget) throws IOException {
