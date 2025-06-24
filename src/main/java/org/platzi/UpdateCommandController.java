@@ -6,11 +6,16 @@ import java.util.Arrays;
 import java.io.*;
 import java.util.Date;
 
-import static org.platzi.Utils.deleteTempFile;
-import static org.platzi.Utils.isValidID;
+import static org.platzi.Utils.*;
+import static org.platzi.Utils.errorHandler;
 
 public class UpdateCommandController {
     public static void updateTitle(File originalFile, String idTarget, String newTask) throws IOException {
+        if(!isNumber(idTarget)){
+            errorHandler("Id is not a number");
+            return;
+        }
+
         File tempFile = new File("tasks_temp.json");
         boolean findIdTarget = false;
 

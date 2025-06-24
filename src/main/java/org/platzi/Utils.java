@@ -34,7 +34,7 @@ public class Utils {
                 "--delete following the id to delete a task",
                 "--mark-done following the id to mark done a task",
                 "--mark-in-progress following the id to mark in progress a task",
-                "--list to see all tasks, or with status (done, in-progress, not done) to filter tasks",
+                "--list to see all tasks, or with status (done, in progress, not done) to filter tasks",
                 "--help to see all commands"
         ));
         commandsList.forEach(System.out::println);
@@ -42,7 +42,7 @@ public class Utils {
 
     public static void isValidID(boolean findIdTarget, String idTarget){
         if (findIdTarget)
-            System.out.println("The task with the ID " + idTarget + " was deleted");
+            System.out.println("The task with the ID " + idTarget + " was found and operated on");
         else
             System.out.println("The task with ID " + idTarget + " was not found");
     }

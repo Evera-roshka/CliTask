@@ -3,9 +3,18 @@ package org.platzi;
 import java.io.*;
 import java.util.Date;
 
+import static org.platzi.Utils.*;
+import static org.platzi.Utils.deleteTempFile;
+
 public class MarkStatusController {
     public static void markStatus(File originalFile, String idTarget, String newStatus) throws IOException {
+        if(!isNumber(idTarget)){
+            errorHandler("Id is not a number");
+            return;
+        }
+
         File tempFile = new File("tasks_temp.json");
+        boolean findIdTarget = false;
 
         try (BufferedReader reader = new BufferedReader(new FileReader(originalFile));
              BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
@@ -14,7 +23,8 @@ public class MarkStatusController {
 
             while ((currentLine = reader.readLine()) != null) {
                 if (currentLine.contains("\"id\":" + idTarget)) {
-                    // Reemplazar el valor de "description"
+                    findIdTarget = true;
+                    // Replace the value of 'description'
                     currentLine = currentLine.replaceAll(
                             "\"status\"\\s*:\\s*\"[^\"]*\"",
                             "\"status\":\"" + newStatus + "\""
@@ -29,13 +39,8 @@ public class MarkStatusController {
             }
         }
 
-        // Reemplazamos el archivo original con el temporal
-        if (originalFile.delete()) {
-            if (!tempFile.renameTo(originalFile)) {
-                System.out.println("No se pudo renombrar el archivo temporal.");
-            }
-        } else {
-            System.out.println("No se pudo borrar el archivo original.");
-        }
+        isValidID(findIdTarget, idTarget); // Let's see if the id was found.
+        deleteTempFile(originalFile, tempFile); // We replaced the original file with the temporary one.
+
     }
 }

@@ -10,19 +10,17 @@ public class Main {
 
         // Create or verify the existence of the file
         File file = new File("tasks.json");
-        if(fileVerificator(file)){
+        if(fileVerificator(file))
             errorHandler("An error occurred while creating the file");
-        }
 
         // Verify the command
-        if(args.length > 0){
-            commandIdentificator(args, file);
-        } else {
+        if(args.length > 0)
+            commandIdentifier(args, file);
+        else
             errorHandler("Don't recognize the instrucction. Use --help to see the availables commands");
-        }
     }
 
-    public static void commandIdentificator(String[] args, File file) throws IOException{
+    public static void commandIdentifier(String[] args, File file) throws IOException{
         switch (args[0]){
             case "--add":
                 if (args.length == 2)
@@ -46,15 +44,26 @@ public class Main {
                 break;
 
             case "--mark-done":
-                MarkStatusController.markStatus(file, args[1], "done");
+                if (args.length == 2)
+                    MarkStatusController.markStatus(file, args[1], "done");
+                else
+                    errorHandler("To mark done you need to use the command --mark-done + id");
                 break;
 
             case "--mark-in-progress":
-                MarkStatusController.markStatus(file, args[1], "in progress");
+                if (args.length == 2)
+                    MarkStatusController.markStatus(file, args[1], "in progress");
+                else
+                    errorHandler("To mark in progress you need to use the command --mark-in-progress + id");
                 break;
 
             case "--list":
-                ListCommandController.listAllTasks(file);
+                if (args.length == 1)
+                    ListCommandController.listAllTasks(file, "all");
+                else if (args.length == 2)
+                    ListCommandController.listAllTasks(file, args[1]);
+                else
+                    errorHandler("To list you need to use the command --list + status or only --list for all tasks");
                 break;
 
             case "--help":

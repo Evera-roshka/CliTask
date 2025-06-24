@@ -7,12 +7,12 @@ import static org.platzi.Utils.*;
 
 public class DeleteCommandController {
     public static void deleteTask(File originalFile, String idTarget) throws IOException {
-        File tempFile = new File("tasks_temp.json");
-
         if(!isNumber(idTarget)){
             errorHandler("Id is not a number");
             return;
         }
+
+        File tempFile = new File("tasks_temp.json");
 
         BufferedReader reader = new BufferedReader(new FileReader(originalFile));
         BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
