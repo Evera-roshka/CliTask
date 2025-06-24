@@ -135,6 +135,9 @@ java org.CliTask.Main --list done
 java org.CliTask.Main --delete 2
 ```
 
+## Project Url
+https://github.com/Evera-roshka/CliTask
+
 ## Contributing
 
 Feel free to fork this project and submit pull requests for any improvements or additional features you'd like to add.
